@@ -35,6 +35,24 @@
 - `CHANGELOG.md` (new)
 - `~/.claude/settings.json` (modified — added Stop hook)
 
+## [2026-02-26 18:45 ET] — Voice cues, cooldown removed, duplicate fix
+
+### Done
+- Added task start/complete voice announcements to CLAUDE.md instructions
+- Removed cooldown entirely (model self-regulates)
+- Fixed hook re-speaking old reflections — now only checks the last text block
+- Stripped config.py to just TTS + audio settings (removed COOLDOWN_SECONDS, COOLDOWN_FILE)
+
+### State
+- CodeTalk v2.0 live, E2E verified, two commits on master
+
+### Files Changed
+- `CLAUDE.md` (updated — voice instructions with 3 behaviors)
+- `codetalk/hooks/codetalk.py` (simplified — no cooldown, last-block-only extraction)
+- `codetalk/scripts/config.py` (stripped — cooldown settings removed)
+
+---
+
 ## [2026-02-26 18:20 ET] — v2.0: Embedded reflections, Haiku removed
 
 ### Done
