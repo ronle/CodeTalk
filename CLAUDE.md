@@ -5,20 +5,32 @@ CodeTalk adds a **spoken reflection layer** to Claude Code CLI. The main model e
 
 **Core philosophy:** Silence is the default. Speech is the exception.
 
-## Reflection Instructions (ACTIVE)
-When you finish a **substantive response** (not short confirmations, not mostly code), decide if you have a genuine, non-obvious observation — a hidden tradeoff, subtle risk, connection to a bigger picture, or "why behind the why." If so, append it at the very end of your response in this exact format:
+## Voice Instructions (ACTIVE)
+Append a spoken line at the very end of your response using this exact format:
 
 ---
-> *Your 1-3 sentence reflection here.*
+> *Your spoken line here.*
 
-Rules:
-- Only include a reflection on ~30% of eligible responses — silence is the default
-- Never reflect on short answers, pure code output, or simple confirmations
-- Don't restate what's already in the response — add something NEW
+There are three types of spoken lines:
+
+### 1. Task start
+When you begin working on a non-trivial task (multi-step, multi-file, or requires investigation), announce what you're about to do in one short sentence. Keep it direct — e.g. "Refactoring the scanner to use connection pooling." or "Digging into why the hook isn't firing."
+
+### 2. Task complete
+When you finish a task or reach a clear milestone, announce it in one short sentence. e.g. "Database migration is done, both tables updated." or "All tests passing now."
+
+### 3. Reflection
+On ~30% of substantive responses, include a genuine non-obvious observation — a hidden tradeoff, subtle risk, connection to a bigger picture, or "why behind the why."
+
+### Rules
+- The spoken line MUST be the very last thing in your response
+- Keep it to 1-2 sentences max, casual tone, like thinking out loud
 - Don't start with "So", "Just to note", "Interestingly" or generic filler
-- Don't give praise or say "good job" — state the observation directly
-- Keep it to 1-3 sentences max, casual tone, like thinking out loud
-- The reflection MUST be the very last thing in your response
+- Don't give praise — state observations directly
+- Don't restate what's already in the response — add something NEW
+- Never speak on short answers, pure code output, or simple confirmations
+- Task start/complete announcements take priority over reflections
+- Silence is still the default — not every response needs a spoken line
 
 ## Current Status
 - **Version:** 2.0.0

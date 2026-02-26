@@ -3,7 +3,7 @@
 CodeTalk — Stop hook for Claude Code.
 
 Extracts embedded reflections from Claude's responses and speaks them.
-The model decides when to reflect — this hook just extracts and speaks.
+The model decides when to speak — this hook just extracts and speaks.
 """
 import json
 import sys
@@ -17,7 +17,6 @@ SCRIPT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                           '..', 'scripts')
 sys.path.insert(0, SCRIPT_DIR)
 
-from config import COOLDOWN_SECONDS, COOLDOWN_FILE
 from speak import speak
 
 # Reflection format: ---\n> *reflection text*\n
@@ -70,38 +69,16 @@ def extract_reflection(transcript_path: str) -> str | None:
     if not all_assistant_text:
         return None
 
-    # Check the last few text blocks for the reflection pattern
-    # (reflection is always at the end of the response)
-    # Use findall to get the LAST match (most recent reflection)
-    combined = '\n'.join(all_assistant_text[-5:])
-    matches = REFLECTION_PATTERN.findall(combined)
+    # Only check the LAST text block — reflection must be the final
+    # thing in the response, so it'll be in the last text block.
+    # Checking more blocks would re-speak old reflections.
+    last_block = all_assistant_text[-1]
+    match = REFLECTION_PATTERN.search(last_block)
 
-    if matches:
-        return matches[-1].strip()
+    if match:
+        return match.group(1).strip()
 
     return None
-
-
-def is_on_cooldown() -> bool:
-    """Check if we spoke too recently."""
-    try:
-        if os.path.exists(COOLDOWN_FILE):
-            with open(COOLDOWN_FILE, 'r') as f:
-                last_spoke = float(f.read().strip())
-            return (time.time() - last_spoke) < COOLDOWN_SECONDS
-    except (ValueError, OSError):
-        pass
-    return False
-
-
-def record_spoke():
-    """Mark that we just spoke."""
-    try:
-        os.makedirs(os.path.dirname(COOLDOWN_FILE), exist_ok=True)
-        with open(COOLDOWN_FILE, 'w') as f:
-            f.write(str(time.time()))
-    except OSError:
-        pass
 
 
 def main():
@@ -132,14 +109,8 @@ def main():
         sys.exit(0)
     log_debug(f"Found reflection: {reflection[:80]}...")
 
-    # Cooldown check
-    if is_on_cooldown():
-        log_debug("Exiting: on cooldown")
-        sys.exit(0)
-
     # Speak it
     log_debug("Speaking...")
-    record_spoke()
     try:
         asyncio.run(speak(reflection))
         log_debug("Done speaking")
