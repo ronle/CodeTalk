@@ -1,5 +1,23 @@
 # CodeTalk — Changelog
 
+## [2026-02-26 18:55 ET] — Public repo, README, promotion prep
+
+### Done
+- Created public GitHub repo: https://github.com/ronle/CodeTalk
+- Wrote README with setup instructions, architecture overview, configuration guide
+- Drafted r/ClaudeAI launch post
+- Deleted v1 leftovers (.claude-plugin/, hooks.json)
+
+### State
+- 4 commits on master, pushed to GitHub
+- Ready for Reddit launch (best posted weekday morning ET)
+
+### Files Changed
+- `README.md` (new)
+- `.gitignore` (new — excludes temp/, nul, __pycache__, .mp3)
+
+---
+
 ## [2026-02-26 16:10 ET] — Initial build from design doc
 
 ### Done

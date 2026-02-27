@@ -34,7 +34,8 @@ On ~30% of substantive responses, include a genuine non-obvious observation — 
 
 ## Current Status
 - **Version:** 2.0.0
-- **State:** Live — embedded reflections, no Haiku, E2E tested
+- **State:** Live — embedded reflections, no Haiku, public on GitHub
+- **Repo:** https://github.com/ronle/CodeTalk
 - **Last Updated:** 2026-02-26
 
 ## Project Structure
